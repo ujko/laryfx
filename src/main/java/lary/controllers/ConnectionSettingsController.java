@@ -1,5 +1,7 @@
 package lary.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -10,6 +12,8 @@ import lary.manager.ConnectionParamManager;
 import lary.model.ConnectionParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class ConnectionSettingsController {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -30,7 +34,10 @@ public class ConnectionSettingsController {
     @FXML
     public TextField connService;
 
-
+    @FXML
+    public void initialize() {
+        setConnectionsInListView();
+    }
 
     @FXML
     public void saveConnectionSettings(ActionEvent actionEvent) {
@@ -46,5 +53,13 @@ public class ConnectionSettingsController {
         //TODO: Create inject
         ConnectionParamManager connectionParamManager = new ConnectionParamManager();
         connectionParamManager.addConnectionParam(connectionParam);
+        setConnectionsInListView();
+    }
+    private void setConnectionsInListView() {
+        ConnectionParamManager connectionParamManager = new ConnectionParamManager();
+        List<ConnectionParam> connectionParams = connectionParamManager.getConnectionParams();
+        logger.debug(connectionParams.toString());
+        ObservableList<ConnectionParam> paramObservableList = FXCollections.observableList(connectionParams);
+        connectionsListView.setItems(paramObservableList);
     }
 }

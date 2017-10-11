@@ -45,14 +45,7 @@ public class ConnectionParam {
 
     @Override
     public String toString() {
-        return "ConnectionParam{" +
-                "connName='" + connName + '\'' +
-                ", connUser='" + connUser + '\'' +
-                ", connPass='" + connPass + '\'' +
-                ", connServer='" + connServer + '\'' +
-                ", connPort='" + connPort + '\'' +
-                ", connService='" + connService + '\'' +
-                '}';
+        return connName;
     }
 
     public static class ConnectionParamBuilder {
