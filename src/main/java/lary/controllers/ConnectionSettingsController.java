@@ -6,11 +6,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import lary.manager.ConnectionParamManager;
 import lary.model.ConnectionParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConnectionSettingsController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     @FXML
     public ToggleGroup dictionary;
     @FXML
@@ -28,7 +30,7 @@ public class ConnectionSettingsController {
     @FXML
     public TextField connService;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
 
     @FXML
     public void saveConnectionSettings(ActionEvent actionEvent) {
@@ -36,9 +38,13 @@ public class ConnectionSettingsController {
                 .connName(connName.getText())
                 .connUser(connUser.getText())
                 .connPass(connPassword.getText())
+                .connServer(connServer.getText())
                 .connPort(connPort.getText())
                 .connService(connService.getText())
                 .build();
         logger.info(connectionParam.toString());
+        //TODO: Create inject
+        ConnectionParamManager connectionParamManager = new ConnectionParamManager();
+        connectionParamManager.addConnectionParam(connectionParam);
     }
 }

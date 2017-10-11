@@ -7,4 +7,8 @@ public class MainController {
 
     @FXML
     public BorderPane mainBorderPane;
+
+    public void init() {
+
+    }
 }

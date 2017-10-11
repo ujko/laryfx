@@ -7,14 +7,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final String FXML_FILE = "/fxml/ConnectionSettings.fxml";
+    private final String FXML_MAIN_FILE = "/fxml/ConnectionSettings.fxml";
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(FXML_FILE));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(FXML_MAIN_FILE));
         Pane pane = loader.load();
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);

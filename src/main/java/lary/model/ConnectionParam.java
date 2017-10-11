@@ -8,6 +8,8 @@ public class ConnectionParam {
     private String connPort;
     private String connService;
 
+    public ConnectionParam(){}
+
     private ConnectionParam(ConnectionParamBuilder cpb) {
         this.connName = cpb.connName;
         this.connUser = cpb.connUser;
