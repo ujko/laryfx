@@ -1,6 +1,6 @@
 package lary.model;
 
-public class ConnectionParam {
+public class ConnectionParam implements Comparable{
     private String connName;
     private String connUser;
     private String connPass;
@@ -8,7 +8,7 @@ public class ConnectionParam {
     private String connPort;
     private String connService;
 
-    public ConnectionParam(){}
+    private ConnectionParam(){}
 
     private ConnectionParam(ConnectionParamBuilder cpb) {
         this.connName = cpb.connName;
@@ -46,6 +46,27 @@ public class ConnectionParam {
     @Override
     public String toString() {
         return connName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConnectionParam that = (ConnectionParam) o;
+
+        return connName.equals(that.connName);
+    }
+
+    @Override
+    public int hashCode() {
+        return connName.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        ConnectionParam cp = (ConnectionParam) o;
+        return this.connName.compareTo(cp.getConnName());
     }
 
     public static class ConnectionParamBuilder {

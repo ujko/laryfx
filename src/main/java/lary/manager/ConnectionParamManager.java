@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ConnectionParamManager {
@@ -32,6 +33,7 @@ public class ConnectionParamManager {
         List<ConnectionParam> connectionParams = getConnectionParams();
         connectionParams = new ArrayList<>(connectionParams);
         connectionParams.add(connectionParam);
+        Collections.sort(connectionParams);
         logger.debug(connectionParams.toString());
         ObjectMapper mapper = new ObjectMapper();
         try {
