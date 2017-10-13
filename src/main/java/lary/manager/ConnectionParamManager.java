@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ConnectionParamManager {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -31,13 +28,16 @@ public class ConnectionParamManager {
     public void addConnectionParam(ConnectionParam connectionParam) {
         logger.debug(connectionParam.toString());
         List<ConnectionParam> connectionParams = getConnectionParams();
-        connectionParams = new ArrayList<>(connectionParams);
-        connectionParams.add(connectionParam);
-        Collections.sort(connectionParams);
+        Set<ConnectionParam> cp = new TreeSet<>();
+        cp.addAll(connectionParams);
+//        connectionParams = new ArrayList<>(connectionParams);
+//        connectionParams.add(connectionParam);
+//        Collections.sort(connectionParams);
+        cp.add(connectionParam);
         logger.debug(connectionParams.toString());
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File(JSON_FILE), connectionParams);
+            mapper.writeValue(new File(JSON_FILE), cp);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
