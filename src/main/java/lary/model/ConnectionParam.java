@@ -1,6 +1,6 @@
 package lary.model;
 
-public class ConnectionParam implements Comparable{
+public class ConnectionParam implements Comparable {
     private String connName;
     private String connUser;
     private String connPass;
@@ -8,7 +8,8 @@ public class ConnectionParam implements Comparable{
     private String connPort;
     private String connService;
 
-    private ConnectionParam(){}
+    private ConnectionParam() {
+    }
 
     private ConnectionParam(ConnectionParamBuilder cpb) {
         this.connName = cpb.connName;

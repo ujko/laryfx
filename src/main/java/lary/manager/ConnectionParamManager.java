@@ -17,7 +17,7 @@ public class ConnectionParamManager {
         ObjectMapper mapper = new ObjectMapper();
         List<ConnectionParam> connectionParams = new ArrayList<>();
         try {
-            connectionParams = Arrays.asList(mapper.readValue(new File(JSON_FILE),ConnectionParam[].class));
+            connectionParams = Arrays.asList(mapper.readValue(new File(JSON_FILE), ConnectionParam[].class));
             logger.debug(connectionParams.toString());
         } catch (IOException e) {
             logger.info(e.getMessage());
@@ -30,14 +30,26 @@ public class ConnectionParamManager {
         List<ConnectionParam> connectionParams = getConnectionParams();
         Set<ConnectionParam> cp = new TreeSet<>();
         cp.addAll(connectionParams);
-//        connectionParams = new ArrayList<>(connectionParams);
-//        connectionParams.add(connectionParam);
-//        Collections.sort(connectionParams);
+        if (cp.contains(connectionParam)) {
+            cp.remove(connectionParam);
+        }
         cp.add(connectionParam);
         logger.debug(connectionParams.toString());
+        saveConnectionParamsToFile(cp);
+    }
+
+    public void deleteConnectionParam(ConnectionParam connectionParam) {
+        List<ConnectionParam> connectionParams = getConnectionParams();
+        Set<ConnectionParam> cp = new TreeSet<>();
+        cp.addAll(connectionParams);
+        cp.remove(connectionParam);
+        saveConnectionParamsToFile(cp);
+    }
+
+    private void saveConnectionParamsToFile(Set<ConnectionParam> connectionParams) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File(JSON_FILE), cp);
+            mapper.writeValue(new File(JSON_FILE), connectionParams);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
