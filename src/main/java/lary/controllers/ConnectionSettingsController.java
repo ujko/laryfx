@@ -4,15 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import lary.manager.ConnectionParamManager;
 import lary.model.ConnectionParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ConnectionSettingsController {
@@ -33,6 +37,7 @@ public class ConnectionSettingsController {
     @FXML
     public TextField connService;
 
+    private BorderPane borderPane;
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private ConnectionParamManager connectionParamManager = new ConnectionParamManager();
 
@@ -76,10 +81,22 @@ public class ConnectionSettingsController {
         setConnectionsInListView();
     }
 
+    public void connect(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/LogSearchController.fxml"));
+        AnchorPane pane = loader.load();
+        borderPane.setCenter(pane);
+    }
+
+    public void setParentPanel(BorderPane pane) {
+        this.borderPane = pane;
+    }
+
     private void setConnectionsInListView() {
         List<ConnectionParam> connectionParams = connectionParamManager.getConnectionParams();
         logger.debug(connectionParams.toString());
         ObservableList<ConnectionParam> paramObservableList = FXCollections.observableList(connectionParams);
         connectionsListView.setItems(paramObservableList);
     }
+
+
 }

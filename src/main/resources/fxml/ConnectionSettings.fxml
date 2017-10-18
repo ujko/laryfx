@@ -90,5 +90,6 @@
             <Insets />
          </opaqueInsets>
       </ListView>
+      <Button layoutX="751.0" layoutY="148.0" mnemonicParsing="false" onAction="#connect" text="Połącz" />
    </children>
 </Pane>

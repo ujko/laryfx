@@ -33,7 +33,9 @@ public class ConnectionParamManager {
         if (cp.contains(connectionParam)) {
             cp.remove(connectionParam);
         }
-        cp.add(connectionParam);
+        if (!connectionParam.getConnName().equals("")) {
+            cp.add(connectionParam);
+        }
         logger.debug(connectionParams.toString());
         saveConnectionParamsToFile(cp);
     }
