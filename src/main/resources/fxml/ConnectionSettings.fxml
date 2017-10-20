@@ -24,32 +24,32 @@
          </contextMenu></ListView>
       <VBox alignment="TOP_CENTER" layoutX="196.0" layoutY="14.0" style="-fx-border-color: red;">
          <children>
-            <TextField fx:id="connName" promptText="Nazwa">
+            <TextField fx:id="connName" promptText="%connectionSet.lbl.name">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="connUser" promptText="Użytkownik">
+            <TextField fx:id="connUser" promptText="%connectionSet.lbl.user">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="connPassword" promptText="Hasło">
+            <PasswordField fx:id="connPassword" promptText="%connectionSet.lbl.pass">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </PasswordField>
-            <TextField fx:id="connServer" promptText="Serwer">
+            <TextField fx:id="connServer" promptText="%connectionSet.lbl.server">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="connPort" promptText="Port">
+            <TextField fx:id="connPort" promptText="%connectionSet.lbl.port">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="connService" promptText="Serwis Oracle">
+            <TextField fx:id="connService" promptText="%connectionSet.lbl.service">
                <VBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
@@ -62,10 +62,10 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Button layoutX="20.0" layoutY="296.0" mnemonicParsing="false" onAction="#saveConnectionSettings" prefHeight="25.0" prefWidth="364.0" text="Zapisz ustawienia" />
+      <Button layoutX="20.0" layoutY="296.0" mnemonicParsing="false" onAction="#saveConnectionSettings" prefHeight="25.0" prefWidth="364.0" text="%connectionSet.saveSettings" />
       <VBox layoutX="400.0" layoutY="14.0" prefHeight="268.0" prefWidth="225.0">
          <children>
-            <RadioButton mnemonicParsing="false" text="Słownik z pliku zewnętrznego">
+            <RadioButton mnemonicParsing="false" text="%connectionSet.rb.outFile">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="10.0" top="25.0" />
                </VBox.margin>
@@ -73,12 +73,12 @@
                   <ToggleGroup fx:id="dictionary" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Słownik z logów" toggleGroup="$dictionary">
+            <RadioButton mnemonicParsing="false" text="%connectionSet.rb.logs" toggleGroup="$dictionary">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" selected="true" text="Nie wczytuj słownika" toggleGroup="$dictionary">
+            <RadioButton mnemonicParsing="false" selected="true" text="%connectionSet.rb.none" toggleGroup="$dictionary">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -90,6 +90,5 @@
             <Insets />
          </opaqueInsets>
       </ListView>
-      <Button layoutX="751.0" layoutY="148.0" mnemonicParsing="false" onAction="#connect" text="Połącz" />
    </children>
 </Pane>
