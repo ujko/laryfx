@@ -79,6 +79,9 @@ public class ConnectionParam implements Comparable {
         private String connService;
 
         public ConnectionParamBuilder connName(String connName) {
+            if(connName==null || "".equals(connName)) {
+                throw new IllegalArgumentException("Name is required field");
+            }
             this.connName = connName;
             return this;
         }

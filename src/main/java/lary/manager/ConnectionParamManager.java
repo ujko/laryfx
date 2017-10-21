@@ -18,7 +18,7 @@ public class ConnectionParamManager {
         List<ConnectionParam> connectionParams = new ArrayList<>();
         try {
             connectionParams = Arrays.asList(mapper.readValue(new File(JSON_FILE), ConnectionParam[].class));
-            logger.debug(connectionParams.toString());
+            logger.debug("getConnectionParams: " + connectionParams.toString());
         } catch (IOException e) {
             logger.info(e.getMessage());
         }
@@ -30,13 +30,12 @@ public class ConnectionParamManager {
         List<ConnectionParam> connectionParams = getConnectionParams();
         Set<ConnectionParam> cp = new TreeSet<>();
         cp.addAll(connectionParams);
+        logger.debug("addConnectionParam - before: " + cp.toString());
         if (cp.contains(connectionParam)) {
             cp.remove(connectionParam);
         }
-        if (!connectionParam.getConnName().equals("")) {
-            cp.add(connectionParam);
-        }
-        logger.debug(connectionParams.toString());
+        cp.add(connectionParam);
+        logger.debug("addConnectionParam - after: " + cp.toString());
         saveConnectionParamsToFile(cp);
     }
 
@@ -44,7 +43,9 @@ public class ConnectionParamManager {
         List<ConnectionParam> connectionParams = getConnectionParams();
         Set<ConnectionParam> cp = new TreeSet<>();
         cp.addAll(connectionParams);
+        logger.debug("deleteConnectionParam - before: " + cp.toString());
         cp.remove(connectionParam);
+        logger.debug("deleteConnectionParam - after: " + cp.toString());
         saveConnectionParamsToFile(cp);
     }
 
@@ -52,6 +53,7 @@ public class ConnectionParamManager {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File(JSON_FILE), connectionParams);
+            logger.debug("saveConnectionParamsToFile - saved: " + connectionParams.toString());
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

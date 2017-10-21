@@ -4,42 +4,42 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import lary.manager.ConnectionParamManager;
 import lary.model.ConnectionParam;
+import lary.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ConnectionSettingsController {
-    @FXML
-    public ToggleGroup dictionary;
-    @FXML
-    public ListView connectionsListView;
-    @FXML
-    public TextField connName;
-    @FXML
-    public TextField connUser;
-    @FXML
-    public PasswordField connPassword;
-    @FXML
-    public TextField connServer;
-    @FXML
-    public TextField connPort;
-    @FXML
-    public TextField connService;
 
+    private static final String LOG_SEARCH_CONTROLLER_FXML = "/fxml/LogSearchController.fxml";
     private BorderPane borderPane;
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private ConnectionParamManager connectionParamManager = new ConnectionParamManager();
+
+    @FXML
+    private ToggleGroup dictionary;
+    @FXML
+    private ListView connectionsListView;
+    @FXML
+    private TextField connName;
+    @FXML
+    private TextField connUser;
+    @FXML
+    private PasswordField connPassword;
+    @FXML
+    private TextField connServer;
+    @FXML
+    private TextField connPort;
+    @FXML
+    private TextField connService;
 
     @FXML
     public void initialize() {
@@ -47,18 +47,22 @@ public class ConnectionSettingsController {
     }
 
     @FXML
-    public void saveConnectionSettings(ActionEvent actionEvent) {
-        ConnectionParam connectionParam = new ConnectionParam.ConnectionParamBuilder()
-                .connName(connName.getText())
-                .connUser(connUser.getText())
-                .connPass(connPassword.getText())
-                .connServer(connServer.getText())
-                .connPort(connPort.getText())
-                .connService(connService.getText())
-                .build();
-        logger.info(connectionParam.toString());
-        connectionParamManager.addConnectionParam(connectionParam);
-        setConnectionsInListView();
+    public void saveConnectionSettings() {
+        try {
+            ConnectionParam connectionParam = new ConnectionParam.ConnectionParamBuilder()
+                    .connName(connName.getText())
+                    .connUser(connUser.getText())
+                    .connPass(connPassword.getText())
+                    .connServer(connServer.getText())
+                    .connPort(connPort.getText())
+                    .connService(connService.getText())
+                    .build();
+            logger.info(connectionParam.toString());
+            connectionParamManager.addConnectionParam(connectionParam);
+            setConnectionsInListView();
+        } catch (IllegalArgumentException e) {
+            logger.info(e.getMessage());
+        }
     }
 
     @FXML
@@ -81,10 +85,8 @@ public class ConnectionSettingsController {
         setConnectionsInListView();
     }
 
-    public void connect(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/LogSearchController.fxml"));
-        AnchorPane pane = loader.load();
-        borderPane.setCenter(pane);
+    public void connect() {
+        borderPane.setCenter(Utils.setCurrentPane(LOG_SEARCH_CONTROLLER_FXML));
     }
 
     public void setParentPanel(BorderPane pane) {

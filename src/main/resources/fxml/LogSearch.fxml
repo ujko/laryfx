@@ -5,6 +5,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lary.controllers.LogController">
    <children>
-      <Label layoutX="353.0" layoutY="152.0" text="Records" />
+      <Label layoutX="353.0" layoutY="152.0" text="Przegląd logów" />
    </children>
 </AnchorPane>
