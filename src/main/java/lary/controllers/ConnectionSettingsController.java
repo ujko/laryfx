@@ -9,17 +9,20 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import lary.manager.ConnectionParamManager;
 import lary.model.ConnectionParam;
 import lary.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.List;
 
 public class ConnectionSettingsController {
 
     private static final String LOG_SEARCH_CONTROLLER_FXML = "/fxml/LogSearchController.fxml";
+
     private BorderPane borderPane;
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private ConnectionParamManager connectionParamManager = new ConnectionParamManager();
@@ -40,6 +43,8 @@ public class ConnectionSettingsController {
     private TextField connPort;
     @FXML
     private TextField connService;
+    @FXML
+    private ListView listViewLogs;
 
     @FXML
     public void initialize() {
@@ -93,12 +98,25 @@ public class ConnectionSettingsController {
         this.borderPane = pane;
     }
 
+    public void addLogsToListView(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(Utils.getResourceBundle().getString("msg.addLogFiles"));
+        List<File> listLogs = fileChooser.showOpenMultipleDialog(null);
+        if (listLogs != null) {
+            logger.debug("Adding "+listLogs+" to listLogs");
+            listViewLogs.getItems().addAll(listLogs);
+        }
+    }
+
+    public void deleteLogsFromListView() {
+        listViewLogs.getItems().remove(listViewLogs.getSelectionModel().getSelectedIndex());
+        logger.debug(listViewLogs.getItems().toString());
+    }
+
     private void setConnectionsInListView() {
         List<ConnectionParam> connectionParams = connectionParamManager.getConnectionParams();
         logger.debug(connectionParams.toString());
         ObservableList<ConnectionParam> paramObservableList = FXCollections.observableList(connectionParams);
         connectionsListView.setItems(paramObservableList);
     }
-
-
 }

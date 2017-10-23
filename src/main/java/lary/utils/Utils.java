@@ -18,7 +18,7 @@ public class Utils {
         try {
             return loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }

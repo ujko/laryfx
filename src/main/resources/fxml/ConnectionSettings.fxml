@@ -85,10 +85,18 @@
             </RadioButton>
          </children>
       </VBox>
-      <ListView layoutX="19.0" layoutY="374.0" prefHeight="268.0" prefWidth="962.0">
+      <ListView fx:id="listViewLogs" layoutX="19.0" layoutY="374.0" prefHeight="268.0" prefWidth="962.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#deleteLogsFromListView" text="Usuń" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </ListView>
+      <Button layoutX="62.0" layoutY="661.0" mnemonicParsing="false" onAction="#addLogsToListView" text="%msg.addLogFiles" />
    </children>
 </Pane>
