@@ -2,17 +2,15 @@ package lary.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import lary.manager.ConnectionParamManager;
-import lary.model.ConnectionParam;
+import lary.database.util.OracleConnection;
+import lary.params.manager.ConnectionParamManager;
+import lary.params.model.ConnectionParam;
+import lary.utils.Dialogs;
 import lary.utils.Utils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +19,11 @@ import java.util.List;
 
 public class ConnectionSettingsController {
 
-    private static final String LOG_SEARCH_CONTROLLER_FXML = "/fxml/LogSearchController.fxml";
 
-    private BorderPane borderPane;
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private ConnectionParamManager connectionParamManager = new ConnectionParamManager();
-
+    @FXML
+    private ToggleButton connectionButton;
     @FXML
     private ToggleGroup dictionary;
     @FXML
@@ -54,20 +51,26 @@ public class ConnectionSettingsController {
     @FXML
     public void saveConnectionSettings() {
         try {
-            ConnectionParam connectionParam = new ConnectionParam.ConnectionParamBuilder()
-                    .connName(connName.getText())
-                    .connUser(connUser.getText())
-                    .connPass(connPassword.getText())
-                    .connServer(connServer.getText())
-                    .connPort(connPort.getText())
-                    .connService(connService.getText())
-                    .build();
-            logger.info(connectionParam.toString());
+            ConnectionParam connectionParam = getConnectionParam();
             connectionParamManager.addConnectionParam(connectionParam);
             setConnectionsInListView();
         } catch (IllegalArgumentException e) {
             logger.info(e.getMessage());
         }
+    }
+
+    @NotNull
+    private ConnectionParam getConnectionParam() {
+        ConnectionParam connectionParam = new ConnectionParam.ConnectionParamBuilder()
+                .connName(connName.getText())
+                .connUser(connUser.getText())
+                .connPass(connPassword.getText())
+                .connServer(connServer.getText())
+                .connPort(connPort.getText())
+                .connService(connService.getText())
+                .build();
+        logger.info(connectionParam.toString());
+        return connectionParam;
     }
 
     @FXML
@@ -84,26 +87,18 @@ public class ConnectionSettingsController {
         }
     }
 
-    public void deleteConnectionSetting(ActionEvent actionEvent) {
+    public void deleteConnectionSetting() {
         ConnectionParam connectionParam = (ConnectionParam) connectionsListView.getSelectionModel().getSelectedItem();
         connectionParamManager.deleteConnectionParam(connectionParam);
         setConnectionsInListView();
     }
 
-    public void connect() {
-        borderPane.setCenter(Utils.setCurrentPane(LOG_SEARCH_CONTROLLER_FXML));
-    }
-
-    public void setParentPanel(BorderPane pane) {
-        this.borderPane = pane;
-    }
-
-    public void addLogsToListView(ActionEvent actionEvent) {
+    public void addLogsToListView() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(Utils.getResourceBundle().getString("msg.addLogFiles"));
         List<File> listLogs = fileChooser.showOpenMultipleDialog(null);
         if (listLogs != null) {
-            logger.debug("Adding "+listLogs+" to listLogs");
+            logger.debug("Adding " + listLogs + " to listLogs");
             listViewLogs.getItems().addAll(listLogs);
         }
     }
@@ -119,4 +114,27 @@ public class ConnectionSettingsController {
         ObservableList<ConnectionParam> paramObservableList = FXCollections.observableList(connectionParams);
         connectionsListView.setItems(paramObservableList);
     }
+
+    @FXML
+    public void connect() {
+        OracleConnection connection = OracleConnection.getInstance();
+        if (connectionButton.isSelected()) {
+            ConnectionParam connectionParam = null;
+            try {
+                connectionParam = getConnectionParam();
+                connection.setConnection(connectionParam);
+                connectionButton.setText(Utils.getResourceBundle().getString("buttons.disconnect"));
+            } catch (IllegalArgumentException e){
+                connectionButton.setSelected(false);
+                Dialogs.showErrorDialog(e.getMessage());
+                logger.error(e.getMessage());
+            }
+        } else {
+            logger.info("Btn connection is off");
+            connection.closeConnection();
+            connectionButton.setText(Utils.getResourceBundle().getString("buttons.connect"));
+        }
+    }
+
+
 }

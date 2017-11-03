@@ -1,7 +1,7 @@
-package lary.manager;
+package lary.params.manager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lary.model.ConnectionParam;
+import lary.params.model.ConnectionParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

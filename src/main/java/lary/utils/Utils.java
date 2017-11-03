@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class Utils {
-    private static final String FXML_MAIN = "/fxml/Main.fxml";
     private static Logger logger = LoggerFactory.getLogger(Utils.class.getName());
 
     public static Pane setCurrentPane(String theme) {
@@ -22,6 +21,7 @@ public class Utils {
         }
         return null;
     }
+
 
     public static ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle("bundles.messages");

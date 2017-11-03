@@ -1,4 +1,6 @@
-package lary.model;
+package lary.params.model;
+
+import lary.utils.Utils;
 
 public class ConnectionParam implements Comparable {
     private String connName;
@@ -79,40 +81,49 @@ public class ConnectionParam implements Comparable {
         private String connService;
 
         public ConnectionParamBuilder connName(String connName) {
-            if(connName==null || "".equals(connName)) {
-                throw new IllegalArgumentException("Name is required field");
-            }
+            checkParam(connName);
             this.connName = connName;
             return this;
         }
 
         public ConnectionParamBuilder connUser(String connUser) {
+            checkParam(connUser);
             this.connUser = connUser;
             return this;
         }
 
         public ConnectionParamBuilder connPass(String connPass) {
+            checkParam(connPass);
             this.connPass = connPass;
             return this;
         }
 
         public ConnectionParamBuilder connServer(String connServer) {
+            checkParam(connServer);
             this.connServer = connServer;
             return this;
         }
 
         public ConnectionParamBuilder connPort(String connPort) {
+            checkParam(connPort);
             this.connPort = connPort;
             return this;
         }
 
         public ConnectionParamBuilder connService(String connService) {
+            checkParam(connService);
             this.connService = connService;
             return this;
         }
 
         public ConnectionParam build() {
             return new ConnectionParam(this);
+        }
+
+        private void checkParam(String param) {
+            if(param==null || "".equals(param)) {
+                throw new IllegalArgumentException(Utils.getResourceBundle().getString("msg.nullField"));
+            }
         }
     }
 }

@@ -16,4 +16,6 @@ public class MenuButtonsController {
     public void logPreview() {
         mainController.setFxmlTheme(LOG_SEARCH_FXML);
     }
+
+    
 }
